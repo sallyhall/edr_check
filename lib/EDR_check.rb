@@ -7,7 +7,7 @@ class EDRCheck
   def self.run
     set_user_options
     events = [
-      execute_and_log_process,
+      execute_process,
       create_file,
       modify_file,
       delete_file,
@@ -35,7 +35,7 @@ class EDRCheck
     @destination_port = get_user_input "What is the port for the network request?"
   end
 
-  def self.execute_and_log_process
+  def self.execute_process
     event = Event.new(@process_path, @process_args)
     event.run
     event.log_data.merge(

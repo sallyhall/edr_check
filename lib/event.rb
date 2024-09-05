@@ -15,6 +15,7 @@ class Event
   end
 
   def run
+    @timestamp = Time.now
     stdout_s, status  = Open3.capture2(command_line)
     @pid = status.pid
     stdout_s
@@ -25,7 +26,8 @@ class Event
       username: Etc.getlogin,
       process_name: @process_name,
       process_command_line: @command_line,
-      process_id: @pid
+      process_id: @pid,
+      timestamp: @timestamp
     }
   end
 end

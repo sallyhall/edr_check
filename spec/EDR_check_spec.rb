@@ -35,7 +35,9 @@ RSpec.describe EDRCheck do
         "process_name" => "ls",
         "process_command_line" => "ls -al"
       })
+
       expect(process_data["process_id"]).to be_an_instance_of(Integer)
+      expect(process_data["timestamp"]).not_to be_empty
 
       expect(file_create_data).to include({
         "username" => "root",
@@ -45,6 +47,7 @@ RSpec.describe EDRCheck do
       })
 
       expect(file_create_data["process_id"]).to be_an_instance_of(Integer)
+      expect(file_create_data["timestamp"]).not_to be_empty
 
       expect(file_modify_data).to include({
         "username" => "root",
@@ -54,6 +57,7 @@ RSpec.describe EDRCheck do
       })
 
       expect(file_modify_data["process_id"]).to be_an_instance_of(Integer)
+      expect(file_modify_data["timestamp"]).not_to be_empty
 
       expect(file_delete_data).to include({
         "username" => "root",
@@ -63,6 +67,7 @@ RSpec.describe EDRCheck do
       })
 
       expect(file_delete_data["process_id"]).to be_an_instance_of(Integer)
+      expect(file_delete_data["timestamp"]).not_to be_empty
 
       expect(network_data).to include({
         "username" => "root",
@@ -72,6 +77,7 @@ RSpec.describe EDRCheck do
       })
 
       expect(network_data["process_id"]).to be_an_instance_of(Integer)
+      expect(network_data["timestamp"]).not_to be_empty
       expect(network_data["destination_ip"]).not_to be_empty
       expect(network_data["destination_port"]).to be_an_instance_of(Integer)
       expect(network_data["source_ip"]).not_to be_empty
