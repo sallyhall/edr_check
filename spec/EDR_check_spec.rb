@@ -5,7 +5,7 @@ RSpec.describe EDRCheck do
   describe ".run" do
     it "runs events and logs metadata" do
       allow(EDRCheck).to receive(:get_user_input)
-        .and_return("ls", "-al", "txt", "new_file", "~/Desktop", "https://posttestserver.dev/p/sally/post", "")
+        .and_return("ls", "-al", "txt", "new_file", "./", "https://posttestserver.dev/p/sally/post", "")
 
       EDRCheck.run
 
@@ -42,8 +42,8 @@ RSpec.describe EDRCheck do
       expect(file_create_data).to include({
         "username" => "root",
         "process_name" => "touch",
-        "process_command_line" => "touch ~/Desktop/new_file.txt",
-        "file_path" => "~/Desktop/new_file.txt"
+        "process_command_line" => "touch ./new_file.txt",
+        "file_path" => "./new_file.txt"
       })
 
       expect(file_create_data["process_id"]).to be_an_instance_of(Integer)
@@ -52,8 +52,8 @@ RSpec.describe EDRCheck do
       expect(file_modify_data).to include({
         "username" => "root",
         "process_name" => "echo",
-        "process_command_line" => "echo hello > ~/Desktop/new_file.txt",
-        "file_path" => "~/Desktop/new_file.txt"
+        "process_command_line" => "echo hello > ./new_file.txt",
+        "file_path" => "./new_file.txt"
       })
 
       expect(file_modify_data["process_id"]).to be_an_instance_of(Integer)
@@ -62,8 +62,8 @@ RSpec.describe EDRCheck do
       expect(file_delete_data).to include({
         "username" => "root",
         "process_name" => "rm",
-        "process_command_line" => "rm ~/Desktop/new_file.txt",
-        "file_path" => "~/Desktop/new_file.txt"
+        "process_command_line" => "rm ./new_file.txt",
+        "file_path" => "./new_file.txt"
       })
 
       expect(file_delete_data["process_id"]).to be_an_instance_of(Integer)
